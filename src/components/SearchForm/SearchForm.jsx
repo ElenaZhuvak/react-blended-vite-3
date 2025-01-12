@@ -1,6 +1,6 @@
-import styles from './SearchForm.module.css'
+import styles from './SearchForm.module.css';
 import { FiSearch } from 'react-icons/fi';
-import {useSearchParams} from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const regions = [
   { id: 'africa', value: 'africa', name: 'Africa' },
@@ -11,13 +11,14 @@ const regions = [
 ];
 
 const SearchForm = () => {
-  const [, setSearchParams] = useSearchParams()
+  const [, setSearchParams] = useSearchParams();
 
- const handleSubmit = (e) => {
-  e.preventDefault()
-  const region = e.target.elements.region.value;
-  setSearchParams({reg: region})
- }
+  const handleSubmit = e => {
+    e.preventDefault();
+    const region = e.target.elements.region.value;
+    if (region === 'default') return;
+    setSearchParams({ reg: region });
+  };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -35,8 +36,11 @@ const SearchForm = () => {
         <option disabled value="default">
           Select a region
         </option>
-        {regions.map(region =><option key={region.id} value={region.value}>{region.value}</option> )}
-        
+        {regions.map(region => (
+          <option key={region.id} value={region.value}>
+            {region.value}
+          </option>
+        ))}
       </select>
     </form>
   );
